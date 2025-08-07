@@ -151,6 +151,19 @@
     .flipped2 .front {
       transform: rotateY(-180deg);
     }
+    .flipped .back:not(#page3) {
+    z-index: 3; 
+    }
+    
+\
+    .flipped2 #page3 {
+        z-index: 3;\
+    }
+\
+    .flipped #page3,
+    .flipped2 .back:not(#page3) {
+        z-index: 1; 
+    }
     
     .nav-arrows {
       display: flex;
