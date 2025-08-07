@@ -131,12 +131,25 @@
       transform: rotateY(180deg);
     }
     
+    .page#page3 {
+      z-index: 1;
+    }
+    
     .flipped .front {
       transform: rotateY(-180deg);
     }
     
     .flipped .back {
       transform: rotateY(0deg);
+    }
+    
+    .flipped2 .back#page3 {
+      transform: rotateY(0deg);
+      z-index: 3;
+    }
+    
+    .flipped2 .front {
+      transform: rotateY(-180deg);
     }
     
     .nav-arrows {
@@ -247,8 +260,6 @@
         margin-left: 0;
         margin-top: 5px;
       }
-
-      
     }
   </style>
 </head>
@@ -273,6 +284,9 @@
       </div>
       <div class="page back">
         <img src="img2.jpg" alt="Policy Page 2">
+      </div>
+      <div class="page back" id="page3">
+        <img src="img3.jpg" alt="Policy Page 3">
       </div>
     </div>
     <div class="nav-arrows">
@@ -317,11 +331,16 @@
     const closeBtn = document.getElementById('closeBtn');
     
     let currentPage = 1;
-    const totalPages = 2;
+    const totalPages = 3; // Changed from 2 to 3
     
     nextBtn.addEventListener('click', () => {
       if (currentPage < totalPages) {
-        book.classList.add('flipped');
+        if (currentPage === 1) {
+          book.classList.add('flipped');
+        } else if (currentPage === 2) {
+          document.getElementById('page3').style.zIndex = '3';
+          book.classList.add('flipped2');
+        }
         currentPage++;
         updateButtons();
       }
@@ -329,7 +348,12 @@
     
     prevBtn.addEventListener('click', () => {
       if (currentPage > 1) {
-        book.classList.remove('flipped');
+        if (currentPage === 2) {
+          book.classList.remove('flipped');
+        } else if (currentPage === 3) {
+          book.classList.remove('flipped2');
+          document.getElementById('page3').style.zIndex = '1';
+        }
         currentPage--;
         updateButtons();
       }
@@ -339,6 +363,8 @@
       document.getElementById('policyViewer').style.display = 'none';
       if (currentPage !== 1) {
         book.classList.remove('flipped');
+        book.classList.remove('flipped2');
+        document.getElementById('page3').style.zIndex = '1';
         currentPage = 1;
         updateButtons();
       }
